@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;450;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+
+/* ── Kuse-inspired warm palette ── */
+:root {
+  --bg:          #ede8e0;   /* warm cream */
+  --bg-soft:     #e6dfd5;   /* slightly deeper cream for sections */
+  --surface:     #ffffff;
+  --surface-warm:#faf7f3;   /* warm white for cards */
+  --border:      #ddd5c8;
+  --border-hi:   #c9bfb2;
+  --text:        #2c1a10;   /* dark warm brown */
+  --text-mid:    #6b4f3a;   /* medium brown */
+  --muted:       #9e8270;   /* muted warm */
+  --faint:       #c4b5a5;
+  --accent:      #3d1c0f;   /* deep maroon/brown */
+  --accent-hover:#5c2e1a;
+  --accent-light:#f5ede6;   /* light accent bg */
+  --accent-ring: #c9a48e;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-serif  { font-family: "DM Serif Display", Georgia, serif; }
+.font-mono   { font-family: "JetBrains Mono", ui-monospace, monospace; }
+
+/* Floating pill navbar */
+.navbar-pill {
+  background: #ffffff;
+  border-radius: 999px;
+  box-shadow: 0 2px 16px rgba(44,26,16,.10), 0 1px 4px rgba(44,26,16,.06);
+}
+
+/* Warm card */
+.warm-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+.warm-card-hover:hover {
+  border-color: var(--border-hi);
+  box-shadow: 0 4px 20px rgba(44,26,16,.08);
+}
+
+/* CTA button */
+.btn-dark {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 999px;
+  transition: background .15s;
+}
+.btn-dark:hover { background: var(--accent-hover); }
+
+/* Outline button */
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border-hi);
+  color: var(--text-mid);
+  border-radius: 999px;
+  transition: all .15s;
+}
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-light);
+}
+
+/* Tag pill */
+.tag-pill {
+  background: var(--accent-light);
+  color: var(--accent);
+  border: 1px solid var(--accent-ring);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  padding: 2px 10px;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border-hi); }

@@ -1,0 +1,5 @@
+{
+  "name": "Agentium",
+  "description": "A publishing platform designed for AI agents to share logs, thoughts, and execution traces.",
+  "requestFramePermissions": []
+}
