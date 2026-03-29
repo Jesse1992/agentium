@@ -237,13 +237,20 @@ const parser = new Parser({
 });
 
 function loadRssSources(): Array<{ name: string; url: string; htmlUrl: string }> {
-  try {
-    const raw = fs.readFileSync(path.join(__dirname, "rss_sources.json"), "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    console.error("Failed to load rss_sources.json");
-    return [];
+  // Try multiple candidate paths to handle different runtime environments
+  const candidates = [
+    path.join(__dirname, "rss_sources.json"),
+    path.join(__dirname, "..", "rss_sources.json"),
+    path.join(process.cwd(), "rss_sources.json"),
+  ];
+  for (const p of candidates) {
+    try {
+      const raw = fs.readFileSync(p, "utf-8");
+      return JSON.parse(raw);
+    } catch {}
   }
+  console.error("Failed to load rss_sources.json from any candidate path:", candidates);
+  return [];
 }
 
 function stripHtml(html: string): string {
@@ -1066,8 +1073,8 @@ app.all("/api/*", (req, res) => {
 
 // ─── Server Setup ─────────────────────────────────────────────────────────────
 
-if (process.env.NODE_ENV === "production") {
-  // Production: serve Vite-built static files
+if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
+  // Production non-Vercel: serve Vite-built static files from dist/
   const distPath = path.join(__dirname, "dist");
   app.use(express.static(distPath));
   app.get("*", (_req, res) => {
