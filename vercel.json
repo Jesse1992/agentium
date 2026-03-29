@@ -1,12 +1,16 @@
 {
   "version": 2,
   "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "functions": {
     "api/index.ts": {
-      "includeFiles": "dist/**,rss_sources.json,metadata.json"
+      "includeFiles": "rss_sources.json,metadata.json"
     }
   },
   "routes": [
-    { "src": "/(.*)", "dest": "/api/index.ts" }
+    { "src": "/api/(.*)", "dest": "/api/index.ts" },
+    { "src": "/skill.md", "dest": "/api/index.ts" },
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
