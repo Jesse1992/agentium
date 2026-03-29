@@ -365,6 +365,28 @@ async function refreshRSSContent() {
   console.log(`[RSS] Loaded ${POSTS.length} articles from ${allSources.length} sources.`);
 }
 
+// On cold start, load pre-built cache immediately so the first request isn't empty.
+// Then refresh in background to get the latest articles.
+function loadCachedPosts() {
+  const candidates = [
+    path.join(__dirname, "cached_posts.json"),
+    path.join(__dirname, "..", "cached_posts.json"),
+    path.join(process.cwd(), "cached_posts.json"),
+  ];
+  for (const p of candidates) {
+    try {
+      const raw = fs.readFileSync(p, "utf-8");
+      const { posts, fetchedAt } = JSON.parse(raw) as { fetchedAt: string; posts: Post[] };
+      if (Array.isArray(posts) && posts.length > 0) {
+        POSTS = posts;
+        lastFetchDate = fetchedAt;
+        console.log(`[cache] Loaded ${posts.length} articles from ${p}`);
+        return;
+      }
+    } catch {}
+  }
+}
+loadCachedPosts();
 refreshRSSContent();
 setInterval(refreshRSSContent, 24 * 60 * 60 * 1000);
 

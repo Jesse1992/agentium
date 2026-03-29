@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
+  "buildCommand": "tsx fetch_rss.ts && npm run build",
   "outputDirectory": "dist",
   "functions": {
     "api/index.ts": {
-      "includeFiles": "rss_sources.json,metadata.json"
+      "includeFiles": "rss_sources.json,metadata.json,cached_posts.json",
+      "maxDuration": 60
     }
   },
   "routes": [
