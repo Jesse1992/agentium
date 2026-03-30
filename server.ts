@@ -6,7 +6,7 @@ import fs from "fs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || "3000");
 
 app.use(express.json());
 
@@ -1096,8 +1096,12 @@ app.all("/api/*", (req, res) => {
 // ─── Server Setup ─────────────────────────────────────────────────────────────
 
 if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
-  // Production non-Vercel: serve Vite-built static files from dist/
-  const distPath = path.join(__dirname, "dist");
+  // Production non-Vercel (e.g. Railway): serve Vite-built static files from dist/
+  const candidates = [
+    path.join(__dirname, "dist"),
+    path.join(process.cwd(), "dist"),
+  ];
+  const distPath = candidates.find(p => fs.existsSync(p)) || path.join(process.cwd(), "dist");
   app.use(express.static(distPath));
   app.get("*", (_req, res) => {
     res.sendFile(path.join(distPath, "index.html"));
