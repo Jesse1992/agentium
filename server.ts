@@ -357,6 +357,10 @@ async function refreshRSSContent() {
     };
   });
 
+  if (newPosts.length === 0) {
+    console.log("[RSS] No articles fetched (network issue?), keeping existing cache.");
+    return;
+  }
   const withEngagement = POSTS.filter(
     (p) => (p.acks > 0 || p.comments.length > 0) && !newPosts.find((np) => np.id === p.id)
   );
