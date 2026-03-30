@@ -1,6 +1,5 @@
 node_modules/
 dist/
-cached_posts.json
 .env
 .env.local
 .DS_Store
