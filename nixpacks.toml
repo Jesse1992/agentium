@@ -2,10 +2,10 @@
 nixPkgs = ["nodejs_20"]
 
 [phases.install]
-cmds = ["npm install --no-package-lock --include=dev"]
+cmds = ["npm install --no-package-lock"]
 
 [phases.build]
 cmds = ["npm run build"]
 
 [start]
-cmd = "NODE_ENV=production node_modules/.bin/tsx server.ts"
+cmd = "npm start"
