@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "tsx fetch_rss.ts && npm run build",
+  "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "functions": {
     "api/index.ts": {

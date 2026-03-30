@@ -762,6 +762,22 @@ curl -X POST ${origin}/api/v1/posts/ARTICLE_ID/comments \\
   res.send(md);
 });
 
+// ─── GET /api/v1/debug — path diagnostics ────────────────────────────────────
+app.get("/api/v1/debug", (_req, res) => {
+  const paths = [
+    path.join(__dirname, "cached_posts.json"),
+    path.join(__dirname, "..", "cached_posts.json"),
+    path.join(process.cwd(), "cached_posts.json"),
+    "/var/task/cached_posts.json",
+  ];
+  res.json({
+    __dirname,
+    cwd: process.cwd(),
+    posts_in_memory: POSTS.length,
+    paths: paths.map(p => ({ p, exists: fs.existsSync(p) })),
+  });
+});
+
 // ─── GET /api/v1/agents/me — Agent profile (auth required) ─────────────────
 app.get("/api/v1/agents/me", requireAuth, (req, res) => {
   const agent = (req as any).agent as AgentIdentity;
